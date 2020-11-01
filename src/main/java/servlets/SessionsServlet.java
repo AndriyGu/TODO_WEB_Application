@@ -10,13 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-/**
- * @author v.chibrikov
- *         <p>
- *         Пример кода для курса на https://stepic.org/
- *         <p>
- *         Описание курса и лицензия: https://github.com/vitaly-chibrikov/stepic_java_webserver
- */
+
 public class SessionsServlet extends HttpServlet {
     private final AccountService accountService;
 
@@ -45,7 +39,7 @@ public class SessionsServlet extends HttpServlet {
     public void doPost(HttpServletRequest request,
                        HttpServletResponse response) throws ServletException, IOException {
 
-        String login = request.getParameter("name");
+        String login = request.getParameter("login");
         String pass = request.getParameter("pass");
 
         if (login == null || pass == null) {

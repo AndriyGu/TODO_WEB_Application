@@ -59,6 +59,8 @@ public class DBworker {
 
     public static void updateProject (Project project){
 
+int i = 4;
+
         try {
             preparedStatement = co.prepareStatement(
                     "UPDATE projects SET name = ?, description =? WHERE id = ?");

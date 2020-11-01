@@ -1,11 +1,8 @@
 package servlets;
 
 import DBcatalog.DBworker;
-import JSON.JsonWorker;
+import JSONcustom.JsonWorker;
 import accounts.AccountService;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import entitys.Project;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;

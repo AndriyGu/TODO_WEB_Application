@@ -1,7 +1,7 @@
 package servlets;
 
 import DBcatalog.DBworker;
-import JSON.JsonWorker;
+import JSONcustom.JsonWorker;
 import accounts.AccountService;
 
 import javax.servlet.ServletException;
@@ -10,10 +10,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class TaskUpdeteServlet extends HttpServlet {
+public class TaskUpdateServlet extends HttpServlet {
     private final AccountService accountService;
 
-    public TaskUpdeteServlet(AccountService accountService) {
+    public TaskUpdateServlet(AccountService accountService) {
         this.accountService = accountService;
     }
 

@@ -1,5 +1,7 @@
 package entitys;
 
+import com.google.gson.annotations.Expose;
+
 public class Project {
 
     private int id;

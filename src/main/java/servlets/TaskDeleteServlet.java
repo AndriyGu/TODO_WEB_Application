@@ -1,7 +1,7 @@
 package servlets;
 
 import DBcatalog.DBworker;
-import JSON.JsonWorker;
+import JSONcustom.JsonWorker;
 import accounts.AccountService;
 
 import javax.servlet.ServletException;
