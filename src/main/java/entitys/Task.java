@@ -7,8 +7,16 @@ public class Task {
     private int status;
     private int project_id;
     private int date_crerate;
-    private int prority;
+    private String prority;
+    private String name;
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public int getId() {
         return id;
@@ -58,11 +66,11 @@ public class Task {
         this.date_crerate = date_crerate;
     }
 
-    public int getPrority() {
+    public String getPrority() {
         return prority;
     }
 
-    public void setPrority(int prority) {
+    public void setPrority(String prority) {
         this.prority = prority;
     }
 }

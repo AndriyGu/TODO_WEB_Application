@@ -1,11 +1,8 @@
 package servlets;
 
-import DBcatalog.DBworker;
-import JSONcustom.JsonWorker;
 import accounts.AccountService;
 import accounts.UserProfile;
 import com.google.gson.Gson;
-import entitys.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -13,11 +10,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-
-public class SessionsServlet extends HttpServlet {
+public class UserProjectServlet  extends HttpServlet {
     private final AccountService accountService;
 
-    public SessionsServlet(AccountService accountService) {
+    public UserProjectServlet(AccountService accountService) {
         this.accountService = accountService;
     }
 
@@ -36,38 +32,5 @@ public class SessionsServlet extends HttpServlet {
             response.setStatus(HttpServletResponse.SC_OK);
         }
     }
-
-
-    //sign in
-    public void doPost(HttpServletRequest request,
-                       HttpServletResponse response) throws ServletException, IOException {
-
-
-        User user = JsonWorker.getUser(request);
-        int r = 4;
-
-        DBworker.conectDB();
-
-        if (user.getPass().equals(DBworker.getAutorisation(user.getLogin()))){
-            response.setContentType("text/html;charset=utf-8");
-            response.setStatus(HttpServletResponse.SC_OK);
-
-
-        }
-        else if (user.getLogin() == null || user.getPass() == null) {
-            response.setContentType("text/html;charset=utf-8");
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            return;
-        }
-        else {
-            response.setContentType("text/html;charset=utf-8");
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            return;
-        }
-
-
-        DBworker.closeDB();
-    }
-
 
 }

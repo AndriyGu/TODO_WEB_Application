@@ -1,7 +1,12 @@
 package main;
 
+import DBcatalog.DBworker;
+import JSONcustom.JsonWorker;
 import accounts.AccountService;
 import accounts.UserProfile;
+import com.google.gson.JsonObject;
+import entitys.Project;
+import entitys.Task;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.HandlerList;
@@ -9,6 +14,8 @@ import org.eclipse.jetty.server.handler.ResourceHandler;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import servlets.*;
+
+import java.util.ArrayList;
 
 /**
  * @author v.chibrikov
@@ -20,29 +27,58 @@ import servlets.*;
 public class Main {
     public static void main(String[] args) throws Exception {
 
+        int [] mass = {1,2,3};
+
+        int [] mass2 = mass;
+
+        mass[2]=4;
+
+
+        System.out.println(mass2[2]);
+
+
+        //String json = gson.toJson(entity);
+
+        DBworker.conectDB();
+
+      //  Task task = DBworker.getTaskID(5);
+
+       // ArrayList<Task> arrayList = DBworker.getTasksProj_id(8);
+
+       // Project project = DBworker.getProjectID(13);
+
+       // ArrayList<Project> arrProj = DBworker.getProjectUser_id(88);
+
+       // JsonObject jsonObject = JsonWorker.createJson(3);
+
+
+
         //DBworker.conectDB();
         //DBworker.insertDB();
         //DBworker.read("");
-       //DBworker.update();
+        //DBworker.update();
 
-
+        System.out.println();
         AccountService accountService = new AccountService();
 
         accountService.addNewUser(new UserProfile("admin"));
         accountService.addNewUser(new UserProfile("test"));
 
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
-        context.addServlet(new ServletHolder(new SessionsServlet(accountService)), "/api/v1/sessions");
-        context.addServlet(new ServletHolder(new ProjectAddServlet(accountService)), "/api/addProj");
+        context.addServlet(new ServletHolder(new SessionsServlet(accountService)), "/api/sessions");
+        context.addServlet(new ServletHolder(new ProjectAddServlet(accountService)), "/api/addProject");
         context.addServlet(new ServletHolder(new TaskAddServlet(accountService)), "/api/addTask");
-        context.addServlet(new ServletHolder(new ProjectDeleteServlet(accountService)), "/api/delProj");
-        context.addServlet(new ServletHolder(new TaskDeleteServlet(accountService)), "/api/delTask");
+        context.addServlet(new ServletHolder(new ProjectDeleteServlet(accountService)), "/api/delProject");
+        context.addServlet(new ServletHolder(new TaskDeleteServlet(accountService)), "/api/deleteTask");
+
+        //get
+        context.addServlet(new ServletHolder(new UserProjectServlet(accountService)), "/api/getUserData");
+
+
 
         //Update
-        context.addServlet(new ServletHolder(new ProjectUpdateServlet(accountService)), "/api/updProj");
-        context.addServlet(new ServletHolder(new TaskUpdateServlet(accountService)), "/api/updTask");
-
-
+        context.addServlet(new ServletHolder(new ProjectUpdateServlet(accountService)), "/api/updateProject");
+        context.addServlet(new ServletHolder(new TaskUpdateServlet(accountService)), "/api/updateTask");
 
         ResourceHandler resource_handler = new ResourceHandler();
         resource_handler.setResourceBase("public_html");

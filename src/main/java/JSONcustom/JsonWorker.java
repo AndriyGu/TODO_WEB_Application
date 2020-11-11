@@ -1,11 +1,13 @@
 package JSONcustom;
 
+import DBcatalog.DBworker;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import entitys.Project;
 import entitys.Task;
+import entitys.User;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.HTTP;
@@ -17,21 +19,20 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.Map;
 
 import static javax.print.attribute.standard.ReferenceUriSchemesSupported.HTTP;
 import static sun.security.krb5.Confounder.intValue;
 
 public class JsonWorker {
-
+        private static int EMPTY_OBJ = -1;
 
     public static String jsonPprepare(HttpServletRequest request)throws ServletException, IOException{
 
 
         request.setCharacterEncoding("utf-8");
         Charset.defaultCharset();
-
-
 
 
         JSONObject jsonObject;
@@ -49,19 +50,6 @@ public class JsonWorker {
 
                 int i = 6;
         } catch (Exception e) { /*report an error*/ }
-
-
-
-        try {
-
-          jsonObject = org.json.HTTP.toJSONObject(jb.toString());
-         //   jsonObject =  HTTP.toJSONObject(jb.toString());
-        } catch (JSONException e) {
-            // crash and burn
-            throw new IOException("Error parsing JSONcustom request string");
-        }
-
-
 
         System.out.println("jb length "+jb.length());
         String resultOfPOST="";
@@ -83,21 +71,21 @@ public class JsonWorker {
             GsonBuilder builder = new GsonBuilder();
             Gson gson = builder.create();
 
-            String lhjk = JsonWorker.jsonPprepare(request);
+            String tempString = JsonWorker.jsonPprepare(request);
 
-            Map jsonMap = gson.fromJson(lhjk, Map.class);
+            Map jsonMapProj = gson.fromJson(tempString, Map.class);
 
-            String dsfs = jsonMap.get("name").toString();
-            int iu =9;
 
-            if (jsonMap.containsKey("id")){project.setId(((Number)jsonMap.get("id")).intValue());}
-            if (jsonMap.containsKey("name")){project.setName(jsonMap.get("name").toString());};
-            if (jsonMap.containsKey("user_id")){project.setUser_id(((int)jsonMap.get("user_id")));}
-            if (jsonMap.containsKey("description")){project.setDescription(jsonMap.get("description").toString());}
 
-            //project = gson.fromJson(lhjk, Project.class);
+            if (jsonMapProj.containsKey("id")){project.setId(((Number)jsonMapProj.get("id")).intValue());}
+            if (jsonMapProj.containsKey("name")){project.setName(jsonMapProj.get("name").toString());}
 
-            int i =9;
+            if (jsonMapProj.containsKey("user_id")){project.setUser_id(((Number)jsonMapProj.get("user_id")).intValue());}
+                else{project.setUser_id(EMPTY_OBJ);}
+            if (jsonMapProj.containsKey("description")){project.setDescription(jsonMapProj.get("description").toString());}
+            if (jsonMapProj.containsKey("created")){project.setCreated(((Number)jsonMapProj.get("created")).intValue());}
+            else{project.setCreated(EMPTY_OBJ);}
+
         } catch (Exception c){
             try {
                 throw new IOException("Error parsing JSONcustom request string");
@@ -110,12 +98,26 @@ public class JsonWorker {
 
     }
     public static Task getTask(HttpServletRequest request){
-        Task task=null;
+        Task task=new Task();
         try {
+            String tempString = JsonWorker.jsonPprepare(request);
             GsonBuilder builder = new GsonBuilder();
             Gson gson = builder.create();
 
-            task = gson.fromJson(JsonWorker.jsonPprepare(request), Task.class);
+            Map jsonMapTasks = gson.fromJson(tempString, Map.class);
+
+            if(jsonMapTasks.containsKey("id")){task.setId(((Number)jsonMapTasks.get("id")).intValue());}
+            if(jsonMapTasks.containsKey("deadline")){task.setDedline(((Number)jsonMapTasks.get("deadline")).intValue());}
+            else{task.setDedline(EMPTY_OBJ);}
+            if(jsonMapTasks.containsKey("text")){task.setText(jsonMapTasks.get("text").toString());}
+            if(jsonMapTasks.containsKey("status")){task.setStatus(((Number)jsonMapTasks.get("status")).intValue());}
+            else{task.setStatus(EMPTY_OBJ);}
+            if(jsonMapTasks.containsKey("project_id")){task.setProject_id(((Number)jsonMapTasks.get("project_id")).intValue());}
+            else{task.setProject_id(EMPTY_OBJ);}
+            if(jsonMapTasks.containsKey("date_crerate")){task.setDate_crerate(((Number)jsonMapTasks.get("date_crerate")).intValue());}
+            else{task.setDate_crerate(EMPTY_OBJ);}
+            if(jsonMapTasks.containsKey("prority")){task.setPrority(jsonMapTasks.get("prority").toString());}
+            if(jsonMapTasks.containsKey("name")){task.setName(jsonMapTasks.get("name").toString());}
 
         } catch (Exception c){
             try {
@@ -128,6 +130,97 @@ public class JsonWorker {
         return task;
 
     }
+    public static User getUser(HttpServletRequest request){
+        User user=null;
+        try {
+            String tempString = JsonWorker.jsonPprepare(request);
+            GsonBuilder builder = new GsonBuilder();
+            Gson gson = builder.create();
 
+            user = gson.fromJson(tempString, User.class);
+        } catch (Exception c){
+            try {
+                throw new IOException("Error parsing JSONcustom request string");
+            } catch (IOException e) {
+
+            }
+        }
+
+        return user;
+
+    }
+
+
+
+    public static JsonObject createJson(int userID) {
+        JsonObject jsonObject = new JsonObject();
+        StringBuffer sb=null;
+
+        //ArrayList<Project> projects = DBworker.getProjectUser_id(user.getId());
+        ArrayList<Project> projects = DBworker.getProjectUser_id(userID);
+
+        int projID=EMPTY_OBJ;
+
+        if(projects!=null & projects.size()>0){projID = projects.get(0).getId();}
+
+        if (projects.size() > 0) {
+
+            sb = new StringBuffer("{\"UserId\":");
+           // sb.append(user.getId() + ", \"projects\":[");
+            sb.append(userID + ", \"projects\":[");
+            //внутри массива проектов
+
+            for (int p =0; p<projects.size(); p++) {
+                Project pr = projects.get(p);
+                sb.append("{\"id\":" + pr.getId() + ",");
+                sb.append("\"name\":\"" + pr.getName() + "\",");
+                sb.append("\"user_id\":" + pr.getUser_id() + ",");
+                sb.append("\"description\":\"" + pr.getDescription() + "\",");
+
+                ArrayList<Task> tasks = DBworker.getTasksProj_id(pr.getId());
+
+                if (tasks.size() > 0) {
+                    sb.append("\"tasks\":[");
+
+                    for (int i = 0; i < tasks.size(); i++) {
+                        Task task = tasks.get(i);
+                        sb.append("{\"id\":" + task.getId() + ",");
+                        sb.append("\"name\":\"" + task.getName() + "\",");
+                        sb.append("\"description\":\"" + task.getText() + "\",");
+                        sb.append("\"created\":" + task.getDate_crerate() + ",");
+                        sb.append("\"priority\":\"" + task.getPrority() + "\"}");
+
+                        if (i!=tasks.size()-1) {
+                            sb.append(",");
+
+                        }
+                        else {
+                            System.out.println("rew");
+                        }
+                    }
+
+                    sb.append("]}");
+
+                }
+
+                if (p!=projects.size()-1) {
+                    sb.append(",");
+
+                }
+                else {
+                    System.out.println("rew");
+                }
+
+            }
+
+            sb.append("]}");
+
+        } //else {d} // проектов нет
+
+        String json = sb.toString();
+
+        return jsonObject = new JsonParser().parse(json).getAsJsonObject();
+
+    }
 
 }

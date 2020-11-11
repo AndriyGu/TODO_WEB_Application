@@ -8,6 +8,15 @@ public class Project {
     private String name;
     private int user_id;
     private String description;
+    private int created;
+
+    public int getCreated() {
+        return created;
+    }
+
+    public void setCreated(int created) {
+        this.created = created;
+    }
 
     public int getId() {
         return id;

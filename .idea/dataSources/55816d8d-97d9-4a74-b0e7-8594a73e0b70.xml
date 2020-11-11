@@ -29,58 +29,66 @@
       <Position>4</Position>
       <DataType>VARCHAR(0,-1)|12</DataType>
     </column>
-    <key id="11" parent="3">
+    <column id="11" parent="3" name="created">
+      <Position>5</Position>
+      <DataType>INTEGER(0,-1)|4</DataType>
+    </column>
+    <key id="12" parent="3">
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="12" parent="5" name="id">
+    <column id="13" parent="5" name="id">
       <Position>1</Position>
       <DataType>INTEGER(0,-1)|4</DataType>
       <SequenceIdentity>1</SequenceIdentity>
     </column>
-    <column id="13" parent="5" name="deadline">
+    <column id="14" parent="5" name="deadline">
       <Position>2</Position>
       <DataType>INTEGER(0,-1)|4</DataType>
     </column>
-    <column id="14" parent="5" name="text">
+    <column id="15" parent="5" name="text">
       <Position>3</Position>
       <DataType>TEXT(0,-1)|12</DataType>
     </column>
-    <column id="15" parent="5" name="status">
+    <column id="16" parent="5" name="status">
       <Position>4</Position>
       <DataType>INTEGER(0,-1)|4</DataType>
     </column>
-    <column id="16" parent="5" name="project_id">
+    <column id="17" parent="5" name="project_id">
       <Position>5</Position>
       <DataType>INTEGER(0,-1)|4</DataType>
     </column>
-    <column id="17" parent="5" name="date_create">
+    <column id="18" parent="5" name="date_create">
       <Position>6</Position>
       <DataType>INTEGER(0,-1)|4</DataType>
     </column>
-    <column id="18" parent="5" name="priority">
+    <column id="19" parent="5" name="name">
       <Position>7</Position>
-      <DataType>INTEGER(0,-1)|4</DataType>
+      <DataType>TEXT(0,-1)|12</DataType>
     </column>
-    <key id="19" parent="5">
+    <column id="20" parent="5" name="priority">
+      <Position>8</Position>
+      <DataType>VARCHAR(0,-1)|12</DataType>
+    </column>
+    <key id="21" parent="5">
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="20" parent="6" name="id">
+    <column id="22" parent="6" name="id">
       <Position>1</Position>
       <DataType>INTEGER(0,-1)|4</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
     </column>
-    <column id="21" parent="6" name="name">
+    <column id="23" parent="6" name="name">
       <Position>2</Position>
       <DataType>TEXT(0,-1)|12</DataType>
     </column>
-    <column id="22" parent="6" name="password">
+    <column id="24" parent="6" name="password">
       <Position>3</Position>
       <DataType>TEXT(0,-1)|12</DataType>
     </column>
-    <key id="23" parent="6">
+    <key id="25" parent="6">
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>

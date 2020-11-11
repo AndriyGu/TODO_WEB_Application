@@ -5,6 +5,8 @@ import java.util.Map;
 
 
 public class AccountService {
+
+    private final boolean isAutorisated = false;
     private final Map<String, UserProfile> loginToProfile;
     private final Map<String, UserProfile> sessionIdToProfile;
 
@@ -31,5 +33,9 @@ public class AccountService {
 
     public void deleteSession(String sessionId) {
         sessionIdToProfile.remove(sessionId);
+    }
+
+    public boolean isAutorisated() {
+        return isAutorisated;
     }
 }
