@@ -61,8 +61,7 @@ public class Main {
         System.out.println();
         AccountService accountService = new AccountService();
 
-        accountService.addNewUser(new UserProfile("admin"));
-        accountService.addNewUser(new UserProfile("test"));
+
 
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
         context.addServlet(new ServletHolder(new SessionsServlet(accountService)), "/api/sessions");
@@ -89,7 +88,12 @@ public class Main {
         Server server = new Server(8080);
         server.setHandler(handlers);
 
+
         server.start();
         server.join();
+    }
+
+    public void sd(String s){
+        s="ewrwer";
     }
 }

@@ -3,7 +3,7 @@ package entitys;
 public class User {
     int id;
     String login;
-    String pass;
+    String password;
 
     public int getId() {
         return id;
@@ -21,11 +21,11 @@ public class User {
         this.login = login;
     }
 
-    public String getPass() {
-        return pass;
+    public String getPassword() {
+        return password;
     }
 
-    public void setPass(String password) {
-        this.pass = pass;
+    public void setPassword(String password) {
+        this.password = this.password;
     }
 }

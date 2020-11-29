@@ -15,6 +15,8 @@ public class AccountService {
         sessionIdToProfile = new HashMap<>();
     }
 
+    public boolean sessionIDisOpen(String sessionID){return sessionIdToProfile.containsKey(sessionID);}
+
     public void addNewUser(UserProfile userProfile) {
         loginToProfile.put(userProfile.getLogin(), userProfile);
     }

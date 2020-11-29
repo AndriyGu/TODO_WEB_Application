@@ -20,6 +20,7 @@ public class DBworker {
             File f = new File(".\\src\\main\\java\\DBcatalog\\todo.db");
             if(f.exists()) {
                 System.out.println("yes");
+
             }
 
 
@@ -28,6 +29,7 @@ public class DBworker {
                     "jdbc:sqlite:.\\src\\main\\java\\DBcatalog\\todo.db");
             //DB/todo.db
             System.out.println("conect");
+
         }catch (Exception e){
             System.out.println(e.getMessage());
             e.printStackTrace();
@@ -37,6 +39,8 @@ public class DBworker {
         try {
             if (preparedStatement!=null){preparedStatement.close();}
             co.close();
+
+            System.out.println("Disconect");
         } catch (SQLException e) {
             e.printStackTrace();
         }

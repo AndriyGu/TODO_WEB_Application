@@ -1,0 +1,38 @@
+<nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
+    <div class="navbar-menu">
+        <div class="navbar-end">
+            <div class="navbar-item">
+                <div class="buttons">
+                    <button id="button-login-form-show" class="button is-success">Login</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<div class="modal" id="modal-auth">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+        <div class="box">
+            <p id="login-error-info" class="hidden">Login or password is incorrect, be careful and try again</p>
+            <label for="login"><b>Username</b></label>
+            <div class="field">
+                <div class="control">
+                    <input id="login" class="input" type="text" placeholder="Enter username" required>
+                </div>
+            </div>
+            <label for="password"><b>Password</b></label>
+            <div class="field">
+                <div class="control">
+                    <input id="password" class="input" type="password" placeholder="Enter password" required>
+                </div>
+            </div>
+
+            <div class="buttons">
+                <button id="button-login" class="button is-success">Login</button>
+                <button id="button-login-cancel" class="button is-danger">Cancel</button>
+            </div>
+        </div>
+    </div>
+    <button class="modal-close is-large" aria-label="close"></button>
+</div>

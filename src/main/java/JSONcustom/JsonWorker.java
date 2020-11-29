@@ -152,7 +152,7 @@ public class JsonWorker {
 
 
 
-    public static JsonObject createJson(int userID) {
+    public static String createJsonByUserID(int userID) {
         JsonObject jsonObject = new JsonObject();
         StringBuffer sb=null;
 
@@ -164,21 +164,23 @@ public class JsonWorker {
         if(projects!=null & projects.size()>0){projID = projects.get(0).getId();}
 
         if (projects.size() > 0) {
+            sb = new StringBuffer();
+           // sb.append("{");
+           // sb.append("\"UserId\":");
+          // sb.append(userID + ", \"projects\":");
 
-            sb = new StringBuffer("{\"UserId\":");
-           // sb.append(user.getId() + ", \"projects\":[");
-            sb.append(userID + ", \"projects\":[");
+           sb.append("[");
             //внутри массива проектов
 
             for (int p =0; p<projects.size(); p++) {
                 Project pr = projects.get(p);
                 sb.append("{\"id\":" + pr.getId() + ",");
                 sb.append("\"name\":\"" + pr.getName() + "\",");
-                sb.append("\"user_id\":" + pr.getUser_id() + ",");
+                sb.append("\"created\":" + pr.getCreated() + ",");
                 sb.append("\"description\":\"" + pr.getDescription() + "\",");
 
                 ArrayList<Task> tasks = DBworker.getTasksProj_id(pr.getId());
-
+                if (tasks.size()==0){sb.append("\"tasks\":[]");};
                 if (tasks.size() > 0) {
                     sb.append("\"tasks\":[");
 
@@ -199,9 +201,11 @@ public class JsonWorker {
                         }
                     }
 
-                    sb.append("]}");
+                    sb.append("]");
 
                 }
+
+                sb.append("}");
 
                 if (p!=projects.size()-1) {
                     sb.append(",");
@@ -213,13 +217,13 @@ public class JsonWorker {
 
             }
 
-            sb.append("]}");
+            sb.append("]");
+           // sb.append("}");
 
         } //else {d} // проектов нет
 
-        String json = sb.toString();
+        return sb.toString();
 
-        return jsonObject = new JsonParser().parse(json).getAsJsonObject();
 
     }
 
